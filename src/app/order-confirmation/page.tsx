@@ -1,5 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 interface DishInCart {
   idMeal: string;
@@ -20,7 +22,6 @@ export default function OrderConfirmation() {
   }, []);
 
   const handleConfirmOrder = () => {
-    // هنا يمكنك إضافة منطق إرسال الطلب للسيرفر أو ما تريده
     localStorage.removeItem("cart"); // تفريغ السلة بعد التأكيد
     setOrderConfirmed(true);
   };
@@ -30,12 +31,9 @@ export default function OrderConfirmation() {
       <div className="min-h-screen flex flex-col justify-center items-center p-6 bg-amber-50">
         <h1 className="text-3xl font-bold mb-4">تم تأكيد طلبك بنجاح!</h1>
         <p className="mb-6">شكرًا لاختيارك مطعمنا. سيتم تجهيز طلبك قريبًا.</p>
-        <a
-          href="/"
-          className="text-amber-600 hover:underline font-semibold"
-        >
+        <Link href="/" className="text-amber-600 hover:underline font-semibold">
           العودة إلى الصفحة الرئيسية
-        </a>
+        </Link>
       </div>
     );
   }
@@ -44,9 +42,9 @@ export default function OrderConfirmation() {
     return (
       <div className="min-h-screen flex flex-col justify-center items-center p-6">
         <h1 className="text-2xl font-semibold mb-4">سلة الطلبات فارغة</h1>
-        <a href="/menu" className="text-amber-600 hover:underline">
+        <Link href="/menu" className="text-amber-600 hover:underline">
           تصفح القائمة لإضافة طلبات
-        </a>
+        </Link>
       </div>
     );
   }
@@ -60,11 +58,12 @@ export default function OrderConfirmation() {
             key={idMeal}
             className="flex items-center border rounded p-4 shadow-sm"
           >
-            <img
+            <Image
               src={strMealThumb}
               alt={strMeal}
-              className="w-20 h-20 rounded object-cover mr-4"
-              loading="lazy"
+              width={80}
+              height={80}
+              className="rounded object-cover mr-4"
             />
             <div className="flex-grow">
               <h2 className="font-semibold text-lg">{strMeal}</h2>

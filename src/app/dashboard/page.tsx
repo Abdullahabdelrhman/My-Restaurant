@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import Link from 'next/link';
 
 // ✅ تعريف نوع الطلب
 interface Order {
@@ -12,11 +14,19 @@ interface Order {
   time: string;
 }
 
+// ✅ تعريف نوع وجبة
+interface Meal {
+  strMeal: string;
+  strMealThumb: string;
+  strInstructions: string;
+  strYoutube: string;
+}
+
 const Dashboard = () => {
-  const [meal, setMeal] = useState<any>(null);
+  const [meal, setMeal] = useState<Meal | null>(null);
   const [activeSection, setActiveSection] = useState('dashboard');
   const [orders, setOrders] = useState<Order[]>([]);
-  const [stats, setStats] = useState({
+  const [stats] = useState({
     totalOrders: 124,
     pendingOrders: 8,
     completedOrders: 116,
@@ -36,7 +46,7 @@ const Dashboard = () => {
       }
     };
 
-    // ✅ بيانات تجريبية للطلبات
+    // بيانات تجريبية للطلبات
     const mockOrders: Order[] = [
       { id: 1, customer: 'أحمد محمد', items: 3, total: 120, status: 'مكتمل', time: '٢٠ دقيقة' },
       { id: 2, customer: 'فاطمة علي', items: 2, total: 85, status: 'قيد التجهيز', time: '١٥ دقيقة' },
@@ -110,10 +120,12 @@ const Dashboard = () => {
               <div className="bg-white p-6 rounded-xl shadow-md">
                 <h2 className="text-xl font-semibold mb-4 text-amber-800">وصفة اليوم</h2>
                 <div className="flex flex-col lg:flex-row gap-6">
-                  <img 
+                  <Image 
                     src={meal.strMealThumb} 
                     alt={meal.strMeal} 
-                    className="w-full lg:w-1/3 h-64 object-cover rounded-lg" 
+                    width={300} 
+                    height={300} 
+                    className="w-full lg:w-1/3 h-64 object-cover rounded-lg"
                   />
                   <div className="flex-1">
                     <h3 className="text-2xl font-bold text-amber-900 mb-3">{meal.strMeal}</h3>
@@ -209,7 +221,7 @@ const Dashboard = () => {
 };
 
 // ✅ مكون فرعي للإحصائيات
-const StatBox = ({ title, value, color }: { title: string; value: any; color: string }) => (
+const StatBox = ({ title, value, color }: { title: string; value: string | number; color: string }) => (
   <div className={`bg-white p-6 rounded-xl shadow-md border-l-4 border-${color}-500`}>
     <h3 className="text-gray-500 text-sm font-medium">{title}</h3>
     <p className={`text-2xl font-bold text-${color}-600`}>{value}</p>
