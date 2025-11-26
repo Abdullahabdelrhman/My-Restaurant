@@ -23,7 +23,6 @@ interface Dish {
   strMeasure4: string;
   strMeasure5: string;
 
-  // بدل any استخدم type آمن
   [key: string]: string | null | undefined;
 }
 
@@ -57,7 +56,7 @@ export default function Home() {
         }
 
         setFeaturedDishes(dishes);
-      } catch (error) {
+      } catch (_error) {
         setError("حدث خطأ أثناء جلب البيانات. يرجى المحاولة لاحقاً.");
       } finally {
         setLoading(false);
@@ -235,7 +234,7 @@ export default function Home() {
 
                 <h3 className="font-semibold text-lg mb-2">{name}</h3>
 
-                <p className="text-gray-700 mb-3">"{comment}"</p>
+                <p className="text-gray-700 mb-3">&quot;{comment}&quot;</p>
 
                 <div className="flex space-x-1 justify-center">
                   {Array.from({ length: rating }).map((_, idx) => (

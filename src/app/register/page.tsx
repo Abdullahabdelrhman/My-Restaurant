@@ -30,17 +30,17 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
+      // ملاحظة: هذا API مجرد مثال، عادة تستخدم API خاص بالتسجيل
       const res = await fetch('https://www.themealdb.com/api/json/v1/1/random.php', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    name,
-    email,
-    password,
-    password_confirmation: passwordConfirm,
-  }),
-});
-
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          password_confirmation: passwordConfirm,
+        }),
+      });
 
       const data = await res.json();
       console.log('Response from API:', data);
@@ -52,7 +52,8 @@ export default function RegisterPage() {
       }
 
       router.push('/login');
-    } catch (err) {
+    } catch (_err) {
+      // استخدم _err لتجنب warning ESLint
       setError('حدث خطأ أثناء إنشاء الحساب');
     } finally {
       setLoading(false);
